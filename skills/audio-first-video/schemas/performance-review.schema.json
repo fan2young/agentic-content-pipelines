@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "performance-review.schema.json",
+  "type": "object",
+  "required": ["schemaVersion", "platforms", "publishedAt", "singleVariable", "hypothesis", "snapshots", "decision", "learning", "nextExperiment"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "platforms": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"enum": ["douyin", "video-account"]}},
+    "publishedAt": {"type": "string", "minLength": 8},
+    "singleVariable": {"type": "string", "minLength": 1},
+    "hypothesis": {"type": "string", "minLength": 1},
+    "snapshots": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/snapshot"}},
+    "decision": {"enum": ["keep", "change", "stop", "wait"]},
+    "learning": {"type": "string", "minLength": 1},
+    "nextExperiment": {"type": "string", "minLength": 1}
+  },
+  "$defs": {
+    "metric": {"type": ["number", "null"], "minimum": 0},
+    "snapshot": {
+      "type": "object",
+      "required": ["platform", "hoursAfterPublish", "plays", "twoSecondBounceRate", "fiveSecondRetentionRate", "averageWatchSeconds", "averageWatchRatio", "completionRate", "engagementRate", "followerConversionRate", "trafficSources"],
+      "properties": {
+        "platform": {"enum": ["douyin", "video-account"]},
+        "hoursAfterPublish": {"type": "number", "minimum": 0},
+        "plays": {"$ref": "#/$defs/metric"},
+        "twoSecondBounceRate": {"$ref": "#/$defs/metric"},
+        "fiveSecondRetentionRate": {"$ref": "#/$defs/metric"},
+        "averageWatchSeconds": {"$ref": "#/$defs/metric"},
+        "averageWatchRatio": {"$ref": "#/$defs/metric"},
+        "completionRate": {"$ref": "#/$defs/metric"},
+        "engagementRate": {"$ref": "#/$defs/metric"},
+        "followerConversionRate": {"$ref": "#/$defs/metric"},
+        "trafficSources": {"type": "object"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "final-report.schema.json",
+  "type": "object", "required": ["schemaVersion", "status", "file", "sha256", "sizeBytes", "containerDurationSeconds", "video", "audio", "qa", "approval", "promotedFrom", "byteIdenticalToApprovedCandidate"],
+  "properties": {
+    "schemaVersion": {"const": 2}, "status": {"const": "approved_final"}, "file": {"type": "string", "minLength": 1},
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "sizeBytes": {"type": "integer", "minimum": 1},
+    "containerDurationSeconds": {"type": "number", "minimum": 0}, "video": {"type": "object"}, "audio": {"type": "object"}, "qa": {"type": "object"},
+    "approval": {"type": "object", "required": ["status", "approvedAt"], "properties": {"status": {"const": "approved"}, "approvedAt": {"type": "string"}}, "additionalProperties": true},
+    "promotedFrom": {"type": "string"}, "byteIdenticalToApprovedCandidate": {"const": true}
+  }, "additionalProperties": true
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "visual-proof.schema.json", "type": "object",
+  "required": ["schemaVersion", "status", "coverage", "motionProof", "checks", "approvedBy", "approvedAt"],
+  "properties": {
+    "schemaVersion": {"enum": [1, 2]}, "status": {"enum": ["draft", "approved"]},
+    "coverage": {"type": "object", "required": ["lightScene", "darkScene", "compositeOverlay"], "additionalProperties": false, "properties": {"lightScene": {"$ref": "#/$defs/frame"}, "darkScene": {"$ref": "#/$defs/frame"}, "compositeOverlay": {"$ref": "#/$defs/frame"}}},
+    "motionProof": {"type": "object", "required": ["path", "durationSeconds", "reviewed"], "properties": {"path": {"type": "string", "minLength": 1}, "durationSeconds": {"type": "number", "minimum": 10, "maximum": 30}, "reviewed": {"const": true}}},
+    "checks": {"type": "object", "required": ["brandLegible", "safeArea", "compositeContrast", "sourceAttribution", "motionArc", "antiPpt"], "properties": {"brandLegible": {"const": true}, "safeArea": {"const": true}, "compositeContrast": {"const": true}, "sourceAttribution": {"const": true}, "motionArc": {"const": true}, "antiPpt": {"const": true}, "logoAssetExact": {"const": true}, "logoAxisIsolation": {"const": true}}, "additionalProperties": false},
+    "approvedBy": {"type": "string", "minLength": 1}, "approvedAt": {"type": "string", "minLength": 8}
+  },
+  "$defs": {"frame": {"type": "object", "required": ["status", "path", "reason"], "properties": {"status": {"enum": ["approved", "not-applicable"]}, "path": {"type": "string"}, "reason": {"type": "string"}}, "additionalProperties": false}},
+  "additionalProperties": true
+}

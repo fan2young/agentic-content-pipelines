@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "timing.schema.json",
+  "type": "object", "required": ["version", "audio", "audioDuration", "compositionDuration", "tailPad", "sceneTransitions", "sceneRanges"],
+  "properties": {
+    "version": {"const": 1}, "audio": {"type": "string", "minLength": 1}, "audioDuration": {"type": "number", "minimum": 0},
+    "compositionDuration": {"type": "number", "minimum": 0}, "tailPad": {"type": "number", "minimum": 0},
+    "sceneTransitions": {"type": "array", "items": {"type": "number", "minimum": 0}},
+    "sceneRanges": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["scene", "start", "end", "beat"], "properties": {
+      "scene": {"type": "string", "minLength": 1}, "start": {"type": "number", "minimum": 0}, "end": {"type": "number", "minimum": 0}, "beat": {"type": "string"}
+    }, "additionalProperties": true}}
+  }, "additionalProperties": true
+}

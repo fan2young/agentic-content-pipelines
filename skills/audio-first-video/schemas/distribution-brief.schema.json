@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "distribution-brief.schema.json",
+  "type": "object",
+  "required": ["schemaVersion", "platforms", "status", "viewer", "feedEntry", "format", "experiment", "engagement", "cover", "approval"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "platforms": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"enum": ["douyin", "video-account"]}},
+    "status": {"enum": ["draft", "approved"]},
+    "viewer": {
+      "type": "object",
+      "required": ["targetViewer", "viewerDecision"],
+      "properties": {
+        "targetViewer": {"type": "string", "minLength": 1},
+        "viewerDecision": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "feedEntry": {
+      "type": "object",
+      "required": ["currentConversation", "freshnessWindow", "visualAnchor", "searchIntent"],
+      "properties": {
+        "currentConversation": {"type": "string", "minLength": 1},
+        "freshnessWindow": {"type": "string", "minLength": 1},
+        "visualAnchor": {"type": "string", "minLength": 1},
+        "searchIntent": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "format": {
+      "type": "object",
+      "required": ["targetDurationSeconds", "payoffBySeconds", "earlyVisualCadenceSeconds"],
+      "properties": {
+        "targetDurationSeconds": {"type": "number", "minimum": 1},
+        "payoffBySeconds": {"type": "number", "minimum": 0},
+        "earlyVisualCadenceSeconds": {"type": "number", "minimum": 0.1},
+        "durationException": {
+          "type": "object",
+          "required": ["approved", "approvedBy", "approvedAt", "reason"],
+          "properties": {
+            "approved": {"const": true},
+            "approvedBy": {"type": "string", "minLength": 1},
+            "approvedAt": {"type": "string", "minLength": 1},
+            "reason": {"type": "string", "minLength": 1}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "experiment": {
+      "type": "object",
+      "required": ["hypothesis", "singleVariable", "baseline", "successSignal"],
+      "properties": {
+        "hypothesis": {"type": "string", "minLength": 1},
+        "singleVariable": {"type": "string", "minLength": 1},
+        "baseline": {"type": "string", "minLength": 1},
+        "successSignal": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "engagement": {
+      "type": "object",
+      "required": ["primaryAction", "prompt", "placement", "pinnedComment", "reason"],
+      "properties": {
+        "primaryAction": {"enum": ["comment", "follow", "save", "share", "none"]},
+        "prompt": {"type": "string"},
+        "placement": {"type": "string", "minLength": 1},
+        "pinnedComment": {"type": "string"},
+        "reason": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "cover": {
+      "type": "object",
+      "required": ["headline", "supportText", "visualAnchor"],
+      "properties": {
+        "headline": {"type": "string", "minLength": 1},
+        "supportText": {"type": "string"},
+        "visualAnchor": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "approval": {
+      "type": "object",
+      "required": ["status", "approvedBy", "approvedAt"],
+      "properties": {
+        "status": {"enum": ["pending", "approved"]},
+        "approvedBy": {"type": "string"},
+        "approvedAt": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

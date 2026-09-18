@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hook-package.schema.json",
+  "type": "object",
+  "required": ["schemaVersion", "platforms", "status", "candidates", "selectedId", "approval"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "platforms": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"enum": ["douyin", "video-account"]}},
+    "status": {"enum": ["draft", "approved"]},
+    "candidates": {"type": "array", "minItems": 3, "items": {"$ref": "#/$defs/candidate"}},
+    "selectedId": {"type": "string", "minLength": 1},
+    "approval": {
+      "type": "object",
+      "required": ["status", "approvedBy", "approvedAt"],
+      "properties": {
+        "status": {"enum": ["pending", "approved"]},
+        "approvedBy": {"type": "string"},
+        "approvedAt": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "candidate": {
+      "type": "object",
+      "required": ["id", "angle", "spokenText", "firstFrameText", "payoff", "payoffBySeconds", "proofAssetIds", "evidenceRefs", "bodyPromise"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "angle": {"enum": ["number", "consequence", "contradiction", "decision", "evidence"]},
+        "spokenText": {"type": "string", "minLength": 1},
+        "firstFrameText": {"type": "string", "minLength": 1},
+        "payoff": {"type": "string", "minLength": 1},
+        "payoffBySeconds": {"type": "number", "minimum": 0},
+        "proofAssetIds": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "evidenceRefs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "bodyPromise": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

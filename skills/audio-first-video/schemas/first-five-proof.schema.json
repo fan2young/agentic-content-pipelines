@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "first-five-proof.schema.json",
+  "type": "object",
+  "required": ["schemaVersion", "status", "clip", "frames", "checks", "approvedBy", "approvedAt"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "status": {"enum": ["draft", "approved"]},
+    "clip": {
+      "type": "object",
+      "required": ["path", "durationSeconds"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "durationSeconds": {"type": "number", "minimum": 5}
+      },
+      "additionalProperties": false
+    },
+    "frames": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "type": "object",
+        "required": ["timestamp", "path"],
+        "properties": {
+          "timestamp": {"type": "number", "minimum": 0},
+          "path": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "checks": {
+      "type": "object",
+      "required": ["phoneSizeReviewed", "firstFrameReadable", "subjectVisibleBy2s", "payoffVisibleBy5s", "meaningfulStateChanges", "noSlowBrandIntro", "noPptOpening"],
+      "properties": {
+        "phoneSizeReviewed": {"const": true},
+        "firstFrameReadable": {"const": true},
+        "subjectVisibleBy2s": {"const": true},
+        "payoffVisibleBy5s": {"const": true},
+        "meaningfulStateChanges": {"type": "integer", "minimum": 2},
+        "noSlowBrandIntro": {"const": true},
+        "noPptOpening": {"const": true}
+      },
+      "additionalProperties": false
+    },
+    "approvedBy": {"type": "string", "minLength": 1},
+    "approvedAt": {"type": "string", "minLength": 8}
+  },
+  "additionalProperties": false
+}

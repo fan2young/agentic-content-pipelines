@@ -1,0 +1,5 @@
+{
+  "schemaVersion": 1, "id": "wechat", "skill": "gzh-design", "statusStage": "wechat", "timingDependency": false,
+  "requiredInputs": ["article.md", "sources.md", "source-visuals.json"], "optionalInputs": ["DESIGN.md", "assets/"],
+  "outputs": ["wechat/article.md", "wechat/article-titles.md", "wechat/article.html", "wechat/cover.png", "wechat/cover-report.json", "wechat/wechat-package.json", "asset-inventory.json"], "invalidationTriggers": ["sources", "article", "visual-style"]
+}

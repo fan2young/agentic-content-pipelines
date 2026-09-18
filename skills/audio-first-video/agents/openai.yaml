@@ -1,0 +1,7 @@
+interface:
+  display_name: "Audio-First Video"
+  short_description: "Build auditable short videos with locked narration and release gates"
+  default_prompt: "Use $audio-first-video to create an evidence-backed short video with explicit content, voice, visual, and release approvals."
+
+policy:
+  allow_implicit_invocation: true

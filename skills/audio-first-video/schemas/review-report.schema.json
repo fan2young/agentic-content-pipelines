@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "review-report.schema.json",
+  "type": "object", "required": ["schemaVersion", "status", "file", "sha256", "sizeBytes", "containerDurationSeconds", "video", "audio", "qa", "approval"],
+  "properties": {
+    "schemaVersion": {"const": 2}, "status": {"enum": ["ready", "ready_with_warnings", "failed"]},
+    "file": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "sizeBytes": {"type": "integer", "minimum": 1},
+    "containerDurationSeconds": {"type": "number", "minimum": 0},
+    "video": {"type": "object", "required": ["codec", "width", "height", "frameRate"], "additionalProperties": true},
+    "audio": {"type": "object", "required": ["codec", "sampleRate", "channels", "integratedLufs", "truePeakDbtp"], "additionalProperties": true},
+    "qa": {"type": "object", "required": ["checks", "actionableExceptions", "visualReview"], "additionalProperties": true},
+    "approval": {"type": "object", "required": ["status"], "properties": {"status": {"enum": ["pending", "approved", "rejected"]}}, "additionalProperties": true}
+  }, "additionalProperties": true
+}

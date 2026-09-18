@@ -1,0 +1,5 @@
+{
+  "schemaVersion": 1, "id": "social-cards", "skill": "guizang-social-card-skill", "statusStage": "social_cards", "timingDependency": false,
+  "requiredInputs": ["article.md"], "optionalInputs": ["sources.md", "DESIGN.md", "assets/"],
+  "outputs": ["social-cards/"], "invalidationTriggers": ["sources", "article", "visual-style"]
+}

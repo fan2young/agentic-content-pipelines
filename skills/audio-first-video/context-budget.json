@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "workflowKind": "multi-stage",
+  "contexts": [
+    {
+      "id": "content",
+      "owns": ["approved narration", "source and distribution masters"],
+      "modelInputs": ["editorial brief", "sources", "distribution and hook references", "spoken-script references"],
+      "machineState": ["search logs", "candidate rejects", "validation details"],
+      "maxModelInputFiles": 8,
+      "exceptionRationale": ""
+    },
+    {
+      "id": "audio-timing",
+      "owns": ["approved narration audio", "captions", "canonical timing"],
+      "modelInputs": ["narration-final.txt", "scenes-draft.json", "DashScope TTS reference", "audio-timing reference"],
+      "machineState": ["raw ASR", "normal audio analysis logs", "alignment diagnostics without exceptions"],
+      "maxModelInputFiles": 6,
+      "exceptionRationale": ""
+    },
+    {
+      "id": "visual-release",
+      "owns": ["visual direction proof", "composition", "review video", "release package"],
+      "modelInputs": ["verified visual handoff", "canonical narration/captions/timing", "brand-references.json", "up to three copied recent DESIGN.md files", "up to nine copied recent style frames", "video design and QA references"],
+      "machineState": ["manifest history", "render logs", "passing lint output", "raw encoded QA logs"],
+      "maxModelInputFiles": 26,
+      "exceptionRationale": "Recent channel references are mandatory creative inputs; their bounded copied files prevent sibling discovery while preserving brand continuity."
+    }
+  ],
+  "boundaries": [
+    {"from": "content", "to": "audio-timing", "freshTask": true, "forkAllowed": false, "carriesConversationHistory": false, "maxHandoffBytes": 10240},
+    {"from": "audio-timing", "to": "visual-release", "freshTask": true, "forkAllowed": false, "carriesConversationHistory": false, "maxHandoffBytes": 65536}
+  ],
+  "deterministicBatching": {
+    "operations": ["recent-episode discovery and bounded copy", "audio fingerprint and duration-delta validation", "alignment and timing", "render preflight", "proof sampling", "encoded QA", "package validation"],
+    "maxNormalToolOutputBytes": 2048,
+    "exceptionsOnly": true
+  },
+  "coldStartTest": {
+    "required": true,
+    "status": "passed",
+    "suppliedInputs": [
+      "skill path",
+      "isolated temporary audio-lock manifest and dummy candidate bytes",
+      "isolated temporary visual project with two prior episode fixtures",
+      "no conversation history, browsing, external APIs, rendering, or existing user projects",
+      "isolated fixtures proving model output cannot approve or mutate release state"
+    ],
+    "siblingDiscoveryAllowed": false,
+    "result": "Passed on 2026-09-18 from an isolated copy of this repository with no conversation history or sibling-project discovery. Skill validation, context-budget validation, Python compilation, and 9 deterministic security and workflow regressions passed. Native render, provider, GPU, and model checks remain explicit environment-dependent gates."
+  },
+  "telemetry": {
+    "required": ["modelResponses", "inputTokens", "cachedInputTokens", "outputTokens", "toolCalls"],
+    "cachedInputRiskThresholdPct": 80,
+    "stageInputGrowthRiskMultiplier": 2
+  }
+}

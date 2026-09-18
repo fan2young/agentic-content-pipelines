@@ -1,0 +1,5 @@
+{
+  "schemaVersion": 1, "id": "slides", "skill": "guizang-ppt-skill", "statusStage": "slides", "timingDependency": false,
+  "requiredInputs": ["article.md"], "optionalInputs": ["sources.md", "DESIGN.md", "assets/"],
+  "outputs": ["slides/"], "invalidationTriggers": ["sources", "article", "visual-style"]
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "wechat-cover-report.schema.json", "type": "object",
+  "required": ["schemaVersion", "status", "wide", "safeMaster", "checks"],
+  "properties": {
+    "schemaVersion": {"enum": [1, 2]}, "status": {"enum": ["draft", "approved"]},
+    "wide": {"$ref": "#/$defs/artifact"}, "square": {"$ref": "#/$defs/artifact"}, "safeMaster": {"type": "boolean"},
+    "checks": {"type": "object", "required": ["titleReadable", "brandVisible", "squareSafeArea", "cropPreviewed"], "properties": {"titleReadable": {"const": true}, "brandVisible": {"const": true}, "squareSafeArea": {"const": true}, "cropPreviewed": {"const": true}}, "additionalProperties": false}
+  },
+  "$defs": {"artifact": {"type": "object", "required": ["path", "width", "height"], "properties": {"path": {"type": "string", "minLength": 1}, "width": {"type": "integer", "minimum": 1}, "height": {"type": "integer", "minimum": 1}}, "additionalProperties": false}},
+  "additionalProperties": true
+}

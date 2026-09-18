@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "short-video",
+  "skill": "produce-audio-first-finance-video",
+  "statusStage": "distribution_package",
+  "timingDependency": true,
+  "distributionTargets": ["douyin", "video-account"],
+  "requiredInputs": [
+    "distribution-brief.json",
+    "hook-package.json",
+    "first-five-proof.json",
+    "review.mp4",
+    "review-report.json"
+  ],
+  "outputs": [
+    "final.mp4",
+    "short-video/cover.png",
+    "short-video/publish-copy.md",
+    "short-video/pinned-comment.md",
+    "short-video/release-package.json",
+    "short-video/performance-review.json"
+  ],
+  "invalidationTriggers": [
+    "distribution_strategy",
+    "narration",
+    "audio_lock",
+    "alignment",
+    "timing",
+    "visuals"
+  ]
+}

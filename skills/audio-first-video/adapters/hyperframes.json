@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1, "id": "hyperframes", "skill": "hyperframes:hyperframes", "statusStage": "video_review", "timingDependency": true,
+  "requiredInputs": ["narration-final.txt", "captions.json", "timing.json", "scenes-draft.json", "source-visuals.json", "DESIGN.md", "asset-ledger.json", "video-design-report.json", "visual-proof-report.json"],
+  "requiredManifestFields": ["audio.path", "audio.sha256", "alignment.captionsSha256"],
+  "outputs": ["video-design-report.json", "visual-proof-report.json", "review.mp4", "review-report.json"],
+  "invalidationTriggers": ["narration", "audio_lock", "alignment", "timing", "visuals"]
+}

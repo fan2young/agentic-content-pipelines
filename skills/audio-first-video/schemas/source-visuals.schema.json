@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "source-visuals.schema.json",
+  "type": "object",
+  "required": ["schemaVersion", "status", "retrievedAt", "visuals", "visualGapReason"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "status": {"enum": ["draft", "decided"]},
+    "retrievedAt": {"type": "string", "minLength": 8},
+    "visualGapReason": {"type": "string"},
+    "visuals": {"type": "array", "items": {
+      "type": "object",
+      "required": ["id", "sourceUrl", "originalUrl", "localPath", "mediaType", "owner", "rightsStatus", "rightsNote", "licenseEvidenceUrl", "usageDecision", "isThirdPartyEmbedded", "attribution", "cropNotes", "sourceContextPreserved", "claimRefs", "channels"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "sourceUrl": {"type": "string", "pattern": "^https?://"},
+        "originalUrl": {"type": "string", "pattern": "^https?://"},
+        "localPath": {"type": "string"},
+        "mediaType": {"enum": ["chart", "diagram", "ui-screenshot", "photo", "video", "document", "other"]},
+        "owner": {"type": "string"},
+        "rightsStatus": {"enum": ["licensed", "official-editorial-quotation", "public-domain", "user-owned", "permission-granted", "unknown", "prohibited"]},
+        "rightsNote": {"type": "string"},
+        "licenseEvidenceUrl": {"type": "string"},
+        "usageDecision": {"enum": ["use", "reference-only", "reject"]},
+        "isThirdPartyEmbedded": {"type": "boolean"},
+        "attribution": {"type": "string"},
+        "cropNotes": {"type": "string"},
+        "sourceContextPreserved": {"type": "boolean"},
+        "claimRefs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "channels": {"type": "array", "uniqueItems": true, "items": {"enum": ["video", "wechat", "slides", "social"]}}
+      },
+      "additionalProperties": true
+    }}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "manifest.schema.json",
+  "title": "Audio-first Next Variable production manifest V2",
+  "type": "object",
+  "required": ["schemaVersion", "project", "audio", "alignment", "stages", "outputs", "history"],
+  "properties": {
+    "schemaVersion": {"const": 2},
+    "project": {
+      "type": "object",
+      "required": ["topic", "audience", "platform", "aspectRatio", "narrationMode", "targetDurationSeconds"],
+      "properties": {
+        "topic": {"type": "string"}, "audience": {"type": "string"}, "platform": {"type": "string"},
+        "aspectRatio": {"type": "string", "pattern": "^[0-9]+:[0-9]+$"},
+        "narrationMode": {"enum": ["reporting", "explainer", "review"]},
+        "targetDurationSeconds": {"type": ["number", "null"], "minimum": 0},
+        "distributionProfile": {"enum": ["standard", "short-video"]},
+        "distributionTargets": {"type": "array", "items": {"enum": ["douyin", "video-account"]}},
+        "requestedBranches": {"type": "array", "items": {"enum": ["wechat", "social_cards", "slides"]}}
+      }, "additionalProperties": true
+    },
+    "audio": {
+      "type": "object",
+      "required": ["path", "sha256", "durationSeconds", "sampleRate", "channels", "integratedLufs", "truePeakDbtp", "lockedAt"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1}, "source": {"type": "string"}, "provider": {"type": "string"},
+        "model": {"type": "string"}, "voice": {"type": "string"},
+        "sha256": {"type": "string", "pattern": "^$|^[a-f0-9]{64}$"},
+        "durationSeconds": {"type": ["number", "null"], "minimum": 0},
+        "sampleRate": {"type": ["integer", "null"], "minimum": 1}, "channels": {"type": ["integer", "null"], "minimum": 1},
+        "integratedLufs": {"type": ["number", "null"]}, "truePeakDbtp": {"type": ["number", "null"]},
+        "lockedAt": {"type": ["string", "null"]}
+      }, "additionalProperties": true
+    },
+    "alignment": {
+      "type": "object", "required": ["captionsSha256", "approvedAt", "reviewer"],
+      "properties": {"captionsSha256": {"type": "string", "pattern": "^$|^[a-f0-9]{64}$"}, "approvedAt": {"type": ["string", "null"]}, "reviewer": {"type": "string"}},
+      "additionalProperties": true
+    },
+    "stages": {"type": "object", "additionalProperties": {"$ref": "#/$defs/stage"}},
+    "outputs": {"type": "object"}, "history": {"type": "array"}, "notes": {"type": "array"}, "finalVideo": {"type": "object"},
+    "branchApprovals": {"type": "object"}
+  },
+  "$defs": {"stage": {"enum": ["pending", "ready", "approved", "invalidated", "failed", "skipped"]}},
+  "additionalProperties": true
+}

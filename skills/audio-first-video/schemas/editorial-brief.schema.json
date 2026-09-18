@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "editorial-brief.schema.json",
+  "title": "Audio-first video editorial brief",
+  "type": "object",
+  "required": ["schemaVersion", "brand", "discovery", "candidates", "decision", "approval"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "brand": {"type": "string", "minLength": 1},
+    "discovery": {
+      "type": "object",
+      "required": ["date", "source", "sourceUrl", "retrievedAt", "deduplicationNote", "scannedLanes", "laneGapReasons"],
+      "properties": {
+        "date": {"type": "string", "minLength": 8},
+        "source": {"type": "string", "minLength": 1},
+        "sourceUrl": {"type": "string", "pattern": "^https?://"},
+        "retrievedAt": {"type": "string", "minLength": 8},
+        "deduplicationNote": {"type": "string", "minLength": 1},
+        "scannedLanes": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": {"enum": ["ai", "business", "career"]}
+        },
+        "laneGapReasons": {
+          "type": "object",
+          "properties": {
+            "ai": {"type": "string"},
+            "business": {"type": "string"},
+            "career": {"type": "string"}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": true
+    },
+    "candidates": {
+      "type": "array",
+      "minItems": 3,
+      "items": {"$ref": "#/$defs/candidate"}
+    },
+    "decision": {
+      "type": "object",
+      "required": ["status", "selectedCandidateId", "reason", "primaryColumn", "contentType", "targetReader", "readerDecision", "evidence", "mechanism", "impactMap", "uncertainty", "watchSignals"],
+      "properties": {
+        "status": {"enum": ["publish", "no-publish"]},
+        "selectedCandidateId": {"type": ["string", "null"]},
+        "reason": {"type": "string", "minLength": 1},
+        "primaryColumn": {"enum": ["AI变量", "商业变量", "职业变量", "本周变量", "变量人物", null]},
+        "secondaryColumn": {"enum": ["AI变量", "商业变量", "职业变量", "本周变量", "变量人物", null]},
+        "contentType": {"enum": ["快报", "变量拆解", "影响分析", "选择指南", "人物案例", null]},
+        "targetReader": {"type": "string"},
+        "readerDecision": {"type": "string"},
+        "evidence": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/evidence"}
+        },
+        "mechanism": {"type": "string"},
+        "impactMap": {"type": "string"},
+        "uncertainty": {"type": "string"},
+        "watchSignals": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      },
+      "additionalProperties": true
+    },
+    "approval": {
+      "type": "object",
+      "required": ["status", "approvedBy", "approvedAt"],
+      "properties": {
+        "status": {"enum": ["pending", "approved"]},
+        "approvedBy": {"type": "string"},
+        "approvedAt": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "variableTest": {
+      "type": "object",
+      "required": ["newFact", "mechanism", "changedChoice", "evidence", "clearerJudgment"],
+      "properties": {
+        "newFact": {"type": "boolean"},
+        "mechanism": {"type": "boolean"},
+        "changedChoice": {"type": "boolean"},
+        "evidence": {"type": "boolean"},
+        "clearerJudgment": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "candidate": {
+      "type": "object",
+      "required": ["id", "title", "lane", "firstPublicAt", "meaningfulUpdateAt", "saturationRisk", "incrementalValue", "variableThesis", "brandFitScore", "heatScore", "evidenceCount", "variableTest"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1},
+        "lane": {"enum": ["ai", "business", "career"]},
+        "firstPublicAt": {"type": "string", "minLength": 8},
+        "meaningfulUpdateAt": {"type": "string", "minLength": 8},
+        "saturationRisk": {"enum": ["low", "low-to-medium", "medium", "medium-to-high", "high"]},
+        "incrementalValue": {"type": "string", "minLength": 1},
+        "variableThesis": {"type": "string", "minLength": 1},
+        "brandFitScore": {"type": "integer", "minimum": 0, "maximum": 5},
+        "heatScore": {"type": "integer", "minimum": 0, "maximum": 5},
+        "evidenceCount": {"type": "integer", "minimum": 0},
+        "variableTest": {"$ref": "#/$defs/variableTest"}
+      },
+      "additionalProperties": true
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["claim", "source", "url", "date"],
+      "properties": {
+        "claim": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1},
+        "url": {"type": "string", "pattern": "^https?://"},
+        "date": {"type": "string", "minLength": 8}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "short-video-release.schema.json",
+  "type": "object",
+  "required": ["schemaVersion", "platforms", "status", "videoPath", "cover", "publishCopyPath", "topics", "pinnedCommentPath", "primaryAction", "sharedSafeAreaApproved", "approvedBy", "approvedAt"],
+  "properties": {
+    "schemaVersion": {"enum": [1, 2]},
+    "platforms": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"enum": ["douyin", "video-account"]}},
+    "status": {"enum": ["draft", "approved"]},
+    "videoPath": {"type": "string", "minLength": 1},
+    "cover": {
+      "type": "object",
+      "required": ["path", "headline", "supportText", "approved"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "headline": {"type": "string", "minLength": 1},
+        "supportText": {"type": "string"},
+        "approved": {"const": true}
+      },
+      "additionalProperties": false
+    },
+    "publishCopyPath": {"type": "string", "minLength": 1},
+    "titlePackage": {
+      "type": "object",
+      "required": ["recommended", "alternatives", "rationale"],
+      "properties": {
+        "recommended": {"type": "string", "minLength": 1},
+        "alternatives": {"type": "array", "minItems": 2, "items": {"type": "string", "minLength": 1}},
+        "rationale": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "topics": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "pinnedCommentPath": {"type": "string", "minLength": 1},
+    "primaryAction": {"enum": ["comment", "follow", "save", "share", "none"]},
+    "sharedSafeAreaApproved": {"const": true},
+    "approvedBy": {"type": "string", "minLength": 1},
+    "approvedAt": {"type": "string", "minLength": 8}
+  },
+  "additionalProperties": false
+}
