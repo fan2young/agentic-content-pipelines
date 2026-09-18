@@ -1,2 +1,2 @@
-dashscope>=1.26.4,<2
+dashscope>=1.27.5,<2
 
