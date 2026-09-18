@@ -1,0 +1,29 @@
+name: Feature request
+description: Propose a scoped workflow or integration improvement
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the concrete workflow limitation, not only the proposed implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed outcome
+    validations:
+      required: true
+  - type: textarea
+    id: authority
+    attributes:
+      label: New authority or attack surface
+      description: Note any new network, credential, filesystem, subprocess, dependency, or approval behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

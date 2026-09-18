@@ -52,6 +52,8 @@ Some end-to-end media checks require native browser, GPU, codec, model, or provi
 
 Pre-release. APIs and file contracts may change before `v1.0.0`. Public metrics should be read from GitHub; this repository does not claim downloads or adoption it cannot verify.
 
+See the [roadmap](ROADMAP.md), [changelog](CHANGELOG.md), and [contribution guide](CONTRIBUTING.md).
+
 ### License
 
 Apache-2.0. See [LICENSE](LICENSE).
@@ -107,6 +109,8 @@ python3 -m unittest discover -s tests -v
 ### 项目状态
 
 当前为预发布版本。`v1.0.0` 之前，API 和文件契约仍可能变化。公开指标以 GitHub 为准；本项目不会声称无法验证的下载量或采用情况。
+
+后续计划、版本记录和参与方式分别见 [Roadmap](ROADMAP.md)、[Changelog](CHANGELOG.md) 与 [贡献指南](CONTRIBUTING.md)。
 
 ### 许可证
 
